@@ -14,6 +14,15 @@
 
 </head>
 
+<script>
+
+
+    function myFunction(id) {
+
+        console.log(id);
+    }
+</script>
+
 <body class="container">
 
     <div class="row mt-4 g-4" hx-trigger="every 5s">
@@ -23,41 +32,45 @@
             <ul class="list-group fs-5 me-5" id="film-list">
                 {{ range . }}
                 {{ block "film-list-element" .}}
-                <li class="list-group-item bg-primary text-white">{{.ID}} - {{ .Title }} - {{.Artist}} - {{.Price}}
+                <li class="list-group-item bg-primary text-white">{{.ID }} - {{ .Title }} - {{.Artist}} - {{.Price}}
+
+                    <button onclick="myFunction('{{.ID}}')">P</button>
                 </li>
                 {{ end }}
                 {{ end }}
             </ul>
         </div>
-
-        <div class="col-4">
-            <h1 class="mb-4">Add Film</h1>
-
-            <form hx-post="/add-film/" hx-target="#film-list" hx-swap="beforeend" hx-indicator="#spinner">
-                <div class="mb-2">
-                    <label for="film-title">Title</label>
-                    <input type="text" name="title" id="title" class="form-control" />
-                </div>
-                <div class="mb-3">
-                    <label for="film-director">Artist</label>
-                    <input type="text" name="artist" id="artist" class="form-control" />
-                </div>
-                <div class="mb-4">
-                    <label for="film-director">Price</label>
-                    <input type="text" name="price" id="price" class="form-control" />
-                </div>
-
-
-                <button type="submit" class="btn btn-primary">
-                    <span class="spinner-border spinner-border-sm htmx-indicator" id="spinner" role="status"
-                        aria-hidden="true"></span>
-                    Submit
-                </button>
-            </form>
-        </div>
-
     </div>
 
+    <div class="col-4">
+        <h1 class="mb-4">Add Film</h1>
+
+        <form hx-post="/add-film/" hx-target="#film-list" hx-swap="beforeend" hx-indicator="#spinner">
+            <div class="mb-2">
+                <label for="film-title">Title</label>
+                <input type="text" name="title" id="title" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label for="film-director">Artist</label>
+                <input type="text" name="artist" id="artist" class="form-control" />
+            </div>
+            <div class="mb-4">
+                <label for="film-director">Price</label>
+                <input type="text" name="price" id="price" class="form-control" />
+            </div>
+
+
+            <button type="submit" class="btn btn-primary">
+                <span class="spinner-border spinner-border-sm htmx-indicator" id="spinner" role="status"
+                    aria-hidden="true"></span>
+                Submit
+            </button>
+        </form>
+    </div>
+
+
+
 </body>
+
 
 </html>

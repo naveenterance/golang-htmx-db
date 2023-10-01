@@ -81,10 +81,24 @@ func main() {
 
 		tmpl := template.Must(template.ParseFiles("index.html"))
 		tmpl.ExecuteTemplate(w, "film-list-element", Album{Title: title, Artist: artist, Price: price})
+
 	}
+
+	/*h3 := func(w http.ResponseWriter, r *http.Request) {
+
+		if r.Method == "GET" {
+
+			id := r.Form.Get("id")
+
+			db.Query("DELETE  FROM album WHERE ID = ?", id)
+
+		}
+
+	}*/
 
 	http.HandleFunc("/", h1)
 	http.HandleFunc("/add-film/", h2)
+	/*http.HandleFunc("/delete/", h3)*/
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 
