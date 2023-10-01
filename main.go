@@ -95,10 +95,30 @@ func main() {
 		}
 
 	}*/
+	/*http.HandleFunc("/delete", func(w http.ResponseWriter, r *http.Request) {
+		// Get the value from the request (assuming it's a GET request)
+		inputValue := r.URL.Query().Get("myInput")
+
+		// Process the value or perform any necessary operations
+		valueProcessed := "Processed value: " + inputValue
+
+		// Return the processed value as the response
+		fmt.Fprint(w, valueProcessed)
+	})*/
+
+	h3 := func(w http.ResponseWriter, r *http.Request) {
+		time.Sleep(1 * time.Second)
+		myVariable := r.FormValue("myVariable")
+		fmt.Println("The variable value is:", myVariable)
+		// Process the variable value here
+		db.Query("DELETE  FROM album WHERE ID = ?", myVariable)
+
+	}
 
 	http.HandleFunc("/", h1)
 	http.HandleFunc("/add-film/", h2)
-	/*http.HandleFunc("/delete/", h3)*/
+	//http.HandleFunc("/delete/", h3)
+	http.HandleFunc("/process", h3)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 

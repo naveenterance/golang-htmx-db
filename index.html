@@ -12,15 +12,13 @@
         integrity="sha384-L6OqL9pRWyyFU3+/bjdSri+iIphTN/bvYyM37tICVyOJkWZLpP2vGn6VUEXgzg6h"
         crossorigin="anonymous"></script>
 
+
 </head>
 
 <script>
 
 
-    function myFunction(id) {
 
-        console.log(id);
-    }
 </script>
 
 <body class="container">
@@ -34,7 +32,17 @@
                 {{ block "film-list-element" .}}
                 <li class="list-group-item bg-primary text-white">{{.ID }} - {{ .Title }} - {{.Artist}} - {{.Price}}
 
-                    <button onclick="myFunction('{{.ID}}')">P</button>
+                    <!--<button onclick="myFunction('{{.ID}}')">P</button>
+                    <button hx-post="/delete" hx-params='{{.ID}}' hx-swap="beforeend"  hx-target="
+                        #film-list">delete</button>-->
+                    <form action="/process" method="POST" hx-post="process" hx-swap="beforeend" hx-indicator="#spinner"
+                        hx-target="#film-list">
+                        <input type=" hidden" name="myVariable" value='{{.ID}}' style="display: none;">
+                        <button type="submit" class="btn btn-primary">
+                            <span class="spinner-border spinner-border-sm htmx-indicator" id="spinner" role="status"
+                                aria-hidden="true"></span>Delete</button>
+                    </form>
+
                 </li>
                 {{ end }}
                 {{ end }}
