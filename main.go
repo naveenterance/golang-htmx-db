@@ -6,7 +6,6 @@ import (
 	"log"
 	"net/http"
 	"text/template"
-	"time"
 
 	"github.com/go-sql-driver/mysql"
 )
@@ -73,51 +72,27 @@ func main() {
 	}
 
 	h2 := func(w http.ResponseWriter, r *http.Request) {
-		time.Sleep(1 * time.Second)
+		//time.Sleep(1 * time.Second)
 		title := r.PostFormValue("title")
 		artist := r.PostFormValue("artist")
 		price := r.PostFormValue("price")
 		_, err = db.Exec("INSERT INTO album (title, artist, price) VALUES (?, ?, ?)", title, artist, price)
 
-		tmpl := template.Must(template.ParseFiles("index.html"))
-		tmpl.ExecuteTemplate(w, "film-list-element", Album{Title: title, Artist: artist, Price: price})
+		//tmpl := template.Must(template.ParseFiles("index.html"))
+		//tmpl.ExecuteTemplate(w, "film-list-element", Album{Title: title, Artist: artist, Price: price})
 
 	}
 
-	/*h3 := func(w http.ResponseWriter, r *http.Request) {
-
-		if r.Method == "GET" {
-
-			id := r.Form.Get("id")
-
-			db.Query("DELETE  FROM album WHERE ID = ?", id)
-
-		}
-
-	}*/
-	/*http.HandleFunc("/delete", func(w http.ResponseWriter, r *http.Request) {
-		// Get the value from the request (assuming it's a GET request)
-		inputValue := r.URL.Query().Get("myInput")
-
-		// Process the value or perform any necessary operations
-		valueProcessed := "Processed value: " + inputValue
-
-		// Return the processed value as the response
-		fmt.Fprint(w, valueProcessed)
-	})*/
-
 	h3 := func(w http.ResponseWriter, r *http.Request) {
-		time.Sleep(1 * time.Second)
+		//time.Sleep(1 * time.Second)
 		myVariable := r.FormValue("myVariable")
 		fmt.Println("The variable value is:", myVariable)
-		// Process the variable value here
 		db.Query("DELETE  FROM album WHERE ID = ?", myVariable)
 
 	}
 
 	http.HandleFunc("/", h1)
 	http.HandleFunc("/add-film/", h2)
-	//http.HandleFunc("/delete/", h3)
 	http.HandleFunc("/process", h3)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
